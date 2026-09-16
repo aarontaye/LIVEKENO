@@ -45,8 +45,6 @@ export interface PlaceBetResult {
   stake: number;
   hits: number;
   payout: number;
-  hits: number;
-  payout: number;
   message: string;
 }
 
