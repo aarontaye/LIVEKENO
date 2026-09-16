@@ -32,7 +32,7 @@ export default function BetSummary({ data }: BetSummaryProps) {
             <TrendingUp className="h-3 w-3" /> Max Payout
           </div>
           <p className="gold-text text-lg font-bold tabular-nums">
-            ${potentialPayout.toLocaleString()}
+            ETB {potentialPayout.toLocaleString()}
           </p>
         </div>
       </div>

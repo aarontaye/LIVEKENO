@@ -29,6 +29,8 @@ async function placeBet(input: PlaceBetInput): Promise<PlaceBetResult> {
     drawId: drawWithResult.id,
     picks: input.picks,
     stake: input.stake,
+    hits,
+    payout,
     message:
       hits > 0
         ? `You hit ${hits} of ${input.picks.length}! Payout: ${payout.toFixed(2)}`

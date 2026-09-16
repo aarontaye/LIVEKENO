@@ -1,4 +1,4 @@
-export type BallState = 'available' | 'picked' | 'drawn';
+export type BallState = 'available' | 'picked' | 'drawn' | 'dimmed';
 
 export interface KenoNumber {
   number: number;
@@ -43,6 +43,10 @@ export interface PlaceBetResult {
   drawId: string;
   picks: number[];
   stake: number;
+  hits: number;
+  payout: number;
+  hits: number;
+  payout: number;
   message: string;
 }
 

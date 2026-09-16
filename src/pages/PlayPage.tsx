@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { BookOpen } from 'lucide-react';
 import AppShell from '@/components/layout/AppShell';
 import Header from '@/components/layout/Header';
@@ -11,68 +11,68 @@ import DrawResultOverlay from '@/components/draw/DrawResultOverlay';
 import PaytableCard from '@/components/paytable/PaytableCard';
 import { useBoardSelection } from '@/state/useBoardSelection';
 import { useUIStore } from '@/state/useUIStore';
-import { useCurrentDraw } from '@/hooks/useCurrentDraw';
 import { usePlaceBet } from '@/hooks/usePlaceBet';
+import { MOCK_CURRENT_DRAW } from '@/lib/mockData';
 import type { PlaceBetResult } from '@/lib/types';
 
 export default function PlayPage() {
   const picks = useBoardSelection((s) => s.picks);
   const togglePick = useBoardSelection((s) => s.togglePick);
   const stake = useUIStore((s) => s.stake);
-  const isAnimating = useUIStore((s) => s.isAnimating);
   const showResult = useUIStore((s) => s.showResult);
   const showPaytable = useUIStore((s) => s.showPaytable);
-  const setAnimating = useUIStore((s) => s.setAnimating);
   const setShowResult = useUIStore((s) => s.setShowResult);
   const setShowPaytable = useUIStore((s) => s.setShowPaytable);
 
-  const { data: currentDraw } = useCurrentDraw();
   const placeBet = usePlaceBet();
   const [result, setResult] = useState<PlaceBetResult | null>(null);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [revealedNumbers, setRevealedNumbers] = useState<number[]>([]);
 
-  const canPlay = picks.length >= 1 && picks.length <= 10 && !isAnimating;
-  const drawnNumbers = showResult && currentDraw ? currentDraw.numbers.map((d) => d.number) : [];
+  const canPlay = picks.length >= 1 && picks.length <= 10 && !isDrawing;
+  const drawnNumbers = showResult ? MOCK_CURRENT_DRAW.numbers.map((d) => d.number) : revealedNumbers;
 
-  async function handlePlay() {
+  const handlePlay = useCallback(async () => {
     if (!canPlay) return;
-    setAnimating(true);
+    setIsDrawing(true);
+    setRevealedNumbers([]);
     try {
       const res = await placeBet.mutateAsync({ picks, stake });
       setResult(res);
     } catch {
-      setAnimating(false);
+      setIsDrawing(false);
+      setRevealedNumbers([]);
     }
-  }
+  }, [canPlay, picks, stake, placeBet]);
 
-  function handleAnimationComplete() {
-    setAnimating(false);
+  const handleReveal = useCallback((number: number) => {
+    setRevealedNumbers((prev) => [...prev, number]);
+  }, []);
+
+  const handleAnimationComplete = useCallback(() => {
+    setIsDrawing(false);
     setShowResult(true);
-  }
+  }, [setShowResult]);
 
-  function handleDismissResult() {
+  const handleDismissResult = useCallback(() => {
     setShowResult(false);
     setResult(null);
-  }
+    setRevealedNumbers([]);
+  }, [setShowResult]);
 
   return (
     <AppShell>
-      <Header />
+      <Header isDrawing={isDrawing} revealedCount={revealedNumbers.length} />
 
       <div className="flex-1 overflow-y-auto hide-scrollbar">
         <div className="space-y-3 px-4 py-4">
           <BetSummary
-            data={
-              picks.length > 0
-                ? { picks, stake, potentialPayout: 0, hitCount: 0 }
-                : null
-            }
+            data={picks.length > 0 ? { picks, stake, potentialPayout: 0, hitCount: 0 } : null}
           />
-
-          <StakeInput />
-
+          <StakeInput disabled={isDrawing} />
           <div className="flex items-center justify-between">
             <p className="text-xs font-semibold uppercase tracking-wider text-white/40">
-              Pick your numbers
+              {isDrawing ? 'Numbers being drawn' : 'Pick your numbers'}
             </p>
             <button
               onClick={() => setShowPaytable(true)}
@@ -90,6 +90,7 @@ export default function PlayPage() {
               picks={picks}
               drawnNumbers={drawnNumbers}
               onToggle={togglePick}
+              isDrawing={isDrawing}
             />
           </div>
         </div>
@@ -98,11 +99,12 @@ export default function PlayPage() {
       <BoardFooter
         onPlay={handlePlay}
         canPlay={canPlay}
-        isPlaying={isAnimating}
+        isPlaying={isDrawing}
+        isDrawing={isDrawing}
       />
 
-      {isAnimating && (
-        <DrawAnimation picks={picks} onComplete={handleAnimationComplete} />
+      {isDrawing && (
+        <DrawAnimation onReveal={handleReveal} onComplete={handleAnimationComplete} />
       )}
 
       {showResult && result && (
@@ -110,10 +112,7 @@ export default function PlayPage() {
       )}
 
       {showPaytable && (
-        <PaytableCard
-          pickCount={picks.length}
-          onClose={() => setShowPaytable(false)}
-        />
+        <PaytableCard pickCount={picks.length} onClose={() => setShowPaytable(false)} />
       )}
     </AppShell>
   );

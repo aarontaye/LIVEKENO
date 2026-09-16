@@ -1,8 +1,6 @@
-import { Check, X, RotateCcw } from 'lucide-react';
+import { FileX2, Play, Trophy, X } from 'lucide-react';
 import type { PlaceBetResult } from '@/lib/types';
 import { useBoardSelection } from '@/state/useBoardSelection';
-import { MOCK_CURRENT_DRAW } from '@/lib/mockData';
-import Ball from '@/components/board/Ball';
 
 interface DrawResultOverlayProps {
   result: PlaceBetResult;
@@ -11,100 +9,62 @@ interface DrawResultOverlayProps {
 
 export default function DrawResultOverlay({ result, onDismiss }: DrawResultOverlayProps) {
   const clear = useBoardSelection((s) => s.clear);
-  const drawnSet = new Set(MOCK_CURRENT_DRAW.numbers.map((d) => d.number));
+  const isWin = result.hits > 0;
 
-  const hits = result.picks.filter((p) => drawnSet.has(p));
-  const misses = result.picks.filter((p) => !drawnSet.has(p));
-  const isWin = hits.length > 0;
+  function resetRound() {
+    clear();
+    onDismiss();
+  }
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-end justify-center animate-fade-in"
-      style={{ background: 'rgba(6, 13, 26, 0.85)', backdropFilter: 'blur(6px)' }}
-      onClick={onDismiss}
-    >
-      <div
-        className="w-full max-w-md rounded-t-3xl p-6 pb-8 animate-overlay-up"
-        style={{
-          background: 'linear-gradient(180deg, #142a4a 0%, #0a1628 100%)',
-          borderTop: '1px solid rgba(59,157,255,0.15)',
-          boxShadow: '0 -8px 32px rgba(0,0,0,0.4)',
-        }}
-        onClick={(e) => e.stopPropagation()}
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#020711]/75 px-4 py-6 backdrop-blur-sm animate-fade-in">
+      <section
+        className="relative w-full max-w-[360px] rounded-2xl border border-[#16446c] bg-[#0a0e17] p-4 shadow-2xl animate-overlay-up"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="draw-complete-title"
       >
-        <div className="mx-auto mb-5 h-1 w-10 rounded-full bg-white/15" />
+        <button
+          type="button"
+          onClick={resetRound}
+          className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10"
+          aria-label="Close draw result"
+        >
+          <X className="h-5 w-5" />
+        </button>
 
-        <div className="mb-5 text-center">
-          <div
-            className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full"
-            style={{
-              background: isWin
-                ? 'linear-gradient(135deg, #f0d680, #d4a84b)'
-                : 'rgba(255,255,255,0.06)',
-              boxShadow: isWin ? '0 0 20px rgba(212,168,75,0.3)' : 'none',
-            }}
-          >
-            {isWin ? (
-              <Check className="h-7 w-7 text-[#0a1628]" strokeWidth={3} />
-            ) : (
-              <X className="h-7 w-7 text-white/40" strokeWidth={3} />
-            )}
+        <div className="mb-4 text-center">
+          <div className={`relative mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full ${isWin ? 'bg-[#3a2c09]' : 'bg-[#172233]'}`}>
+            {isWin ? <Trophy className="h-8 w-8 text-[#f0c53d]" /> : <FileX2 className="h-8 w-8 text-[#9aa8bb]" />}
+            {isWin && [0, 1, 2, 3, 4, 5].map((dot) => (
+              <span key={dot} className="absolute h-1.5 w-1.5 rounded-full bg-[#f0c53d]" style={{ transform: `rotate(${dot * 60}deg) translateY(-34px)` }} />
+            ))}
           </div>
-          <h2 className={`text-2xl font-black ${isWin ? 'gold-text' : 'text-white/60'}`}>
-            {isWin ? 'Winner!' : 'No Win'}
-          </h2>
-          <p className="mt-1 text-sm text-white/50">{result.message}</p>
+          <h2 id="draw-complete-title" className="text-xl font-black text-white">Draw complete</h2>
+          <p className="mt-1 text-sm text-white/65">You matched {result.hits} out of {result.picks.length} picks.</p>
         </div>
 
-        <div className="mb-5 space-y-2">
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-white/40">
-            Your Numbers
-          </p>
-          <div className="flex flex-wrap gap-1.5">
-            {result.picks.map((n) => {
-              const hit = drawnSet.has(n);
-              return (
-                <div key={n} className="relative">
-                  <Ball
-                    number={n}
-                    state={hit ? 'drawn' : 'picked'}
-                    size="sm"
-                  />
-                  {hit && (
-                    <span
-                      className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#3b9dff]"
-                      style={{ boxShadow: '0 0 6px rgba(59,157,255,0.8)' }}
-                    >
-                      <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
-                    </span>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-          {misses.length > 0 && (
-            <p className="pt-1 text-[11px] text-white/30">
-              {hits.length} hit · {misses.length} missed
-            </p>
-          )}
+        <div className={`rounded-xl border px-4 py-3 text-center ${isWin ? 'border-[#3ddc84] bg-[#063126]/70' : 'border-[#214363] bg-[#102238]'}`}>
+          {isWin && <p className="text-xs font-bold uppercase tracking-wider text-[#3ddc84]">You won</p>}
+          <p className={`mt-0.5 text-2xl font-black tabular-nums ${isWin ? 'text-[#3ddc84]' : 'text-white'}`}>ETB {result.payout.toLocaleString()}</p>
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-white/65">Payout</p>
+        </div>
+
+        <div className="mt-3 grid grid-cols-3 divide-x divide-[#214363] rounded-xl bg-[#102238] px-2 py-3 text-center">
+          <div><p className="text-lg font-black text-white">{result.picks.length}</p><p className="text-[10px] text-white/60">Total picks</p></div>
+          <div><p className="text-lg font-black text-white">{result.hits}</p><p className="text-[10px] text-white/60">Hits</p></div>
+          <div><p className="text-lg font-black text-white">{result.payout.toLocaleString()}</p><p className="text-[10px] text-white/60">Payout</p></div>
         </div>
 
         <button
-          onClick={() => {
-            clear();
-            onDismiss();
-          }}
-          className="flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-sm font-bold transition-all active:scale-95"
-          style={{
-            background: 'linear-gradient(135deg, #f0d680 0%, #d4a84b 50%, #a8842f 100%)',
-            color: '#0a1628',
-            boxShadow: '0 4px 16px rgba(212,168,75,0.3)',
-          }}
+          type="button"
+          onClick={resetRound}
+          className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#ffe36b] via-[#f2c63d] to-[#d69b18] py-3.5 text-sm font-black text-[#10151f] shadow-[0_6px_18px_rgba(240,197,61,0.25)] transition-transform active:scale-95"
         >
-          <RotateCcw className="h-4 w-4" />
-          Play Again
+          <Play className="h-4 w-4 fill-current" />
+          Play again
         </button>
-      </div>
+      </section>
     </div>
   );
 }
