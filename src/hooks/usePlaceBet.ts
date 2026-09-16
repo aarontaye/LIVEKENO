@@ -3,7 +3,7 @@ import { MOCK_CURRENT_DRAW, MOCK_PAYTABLE, MAX_PICKS } from '@/lib/mockData';
 import type { Draw, PlaceBetInput, PlaceBetResult } from '@/lib/types';
 
 async function placeBet(input: PlaceBetInput): Promise<PlaceBetResult> {
-  await new Promise((r) => setTimeout(r, 600));
+  await new Promise((r) => setTimeout(r, 20000));
 
   if (input.picks.length === 0 || input.picks.length > MAX_PICKS) {
     throw new Error('Invalid number of picks');

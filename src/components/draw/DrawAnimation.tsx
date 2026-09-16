@@ -9,22 +9,21 @@ interface DrawAnimationProps {
 export default function DrawAnimation({ onReveal, onComplete }: DrawAnimationProps) {
   useEffect(() => {
     let index = 0;
-    const timer = window.setInterval(() => {
-      const next = MOCK_CURRENT_DRAW.numbers[index];
-      if (!next) {
-        window.clearInterval(timer);
+    let timer: number;
+
+    function tick() {
+      if (index >= MOCK_CURRENT_DRAW.numbers.length) {
         onComplete();
         return;
       }
-      onReveal(next.number);
+      onReveal(MOCK_CURRENT_DRAW.numbers[index].number);
       index += 1;
-      if (index === MOCK_CURRENT_DRAW.numbers.length) {
-        window.clearInterval(timer);
-        window.setTimeout(onComplete, 450);
-      }
-    }, 190);
+      timer = window.setTimeout(tick, 1000);
+    }
 
-    return () => window.clearInterval(timer);
+    tick();
+
+    return () => window.clearTimeout(timer);
   }, [onComplete, onReveal]);
 
   return null;
