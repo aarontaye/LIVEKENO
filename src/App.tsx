@@ -3,6 +3,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import PlayPage from '@/pages/PlayPage';
 import HistoryPage from '@/pages/HistoryPage';
 import AdminApp from '@/admin/AdminApp';
+import SplashScreen from '@/components/splash/SplashScreen';
+import { useUIStore } from '@/state/useUIStore';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -11,6 +13,9 @@ const queryClient = new QueryClient({
 });
 
 export default function App() {
+  const hasSeenSplash = useUIStore((s) => s.hasSeenSplash);
+  const completeSplash = useUIStore((s) => s.completeSplash);
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
@@ -22,6 +27,7 @@ export default function App() {
           <Route path="*" element={<Navigate to="/play" replace />} />
         </Routes>
       </BrowserRouter>
+      {!hasSeenSplash && <SplashScreen onComplete={completeSplash} />}
     </QueryClientProvider>
   );
 }
