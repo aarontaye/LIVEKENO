@@ -10,10 +10,10 @@ const toneMap = { gold: 'text-[#e8a93b]', green: 'text-[#3ddc84]', blue: 'text-[
 
 export default function ReportSummaryCards() {
   return (
-    <div className="grid grid-cols-5 gap-4">
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
       {cards.map((c) => (
         <div key={c.label} className="rounded-xl border border-[rgba(232,169,59,0.12)] bg-[#0a0e17] p-4">
-          <p className={`text-xl font-black tabular-nums ${toneMap[c.tone as 'gold' | 'green' | 'blue']}`}>{c.value}</p>
+          <p className={`text-lg font-black tabular-nums sm:text-xl ${toneMap[c.tone as 'gold' | 'green' | 'blue']}`}>{c.value}</p>
           <p className="mt-1 text-xs font-medium uppercase tracking-wider text-[#7a8a9e]">{c.label}</p>
         </div>
       ))}

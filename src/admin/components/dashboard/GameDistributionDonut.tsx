@@ -10,10 +10,10 @@ export default function GameDistributionDonut() {
   const circumference = 2 * Math.PI * radius;
   let offset = 0;
   return (
-    <div className="rounded-xl border border-[rgba(232,169,59,0.12)] bg-[#0a0e17] p-5">
+    <div className="rounded-xl border border-[rgba(232,169,59,0.12)] bg-[#0a0e17] p-4 sm:p-5">
       <h3 className="text-sm font-bold text-white">Game Distribution</h3>
-      <div className="mt-4 flex items-center gap-6">
-        <svg width="140" height="140" viewBox="0 0 140 140">
+      <div className="mt-4 flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
+        <svg width="140" height="140" viewBox="0 0 140 140" className="shrink-0">
           {segments.map((seg) => {
             const dash = (seg.value / total) * circumference;
             const el = <circle key={seg.label} cx="70" cy="70" r={radius} fill="none" stroke={seg.color} strokeWidth="14" strokeDasharray={`${dash} ${circumference - dash}`} strokeDashoffset={-offset} transform="rotate(-90 70 70)" />;
@@ -23,7 +23,7 @@ export default function GameDistributionDonut() {
           <text x="70" y="66" textAnchor="middle" className="fill-white text-lg font-black">78%</text>
           <text x="70" y="82" textAnchor="middle" className="fill-[#7a8a9e] text-[9px]">Keno</text>
         </svg>
-        <div className="space-y-2">
+        <div className="flex flex-row flex-wrap justify-center gap-3 sm:flex-col sm:gap-2">
           {segments.map((seg) => (
             <div key={seg.label} className="flex items-center gap-2 text-xs">
               <span className="h-2.5 w-2.5 rounded-full" style={{ background: seg.color }} />

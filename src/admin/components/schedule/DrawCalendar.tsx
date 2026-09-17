@@ -4,10 +4,10 @@ const cells = Array.from({ length: 35 }, (_, i) => i - 2);
 
 export default function DrawCalendar() {
   return (
-    <div className="rounded-xl border border-[rgba(232,169,59,0.12)] bg-[#0a0e17] p-5">
+    <div className="rounded-xl border border-[rgba(232,169,59,0.12)] bg-[#0a0e17] p-4 sm:p-5">
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-sm font-bold text-white">April 2025</h3>
-        <div className="flex items-center gap-2 text-[#7a8a9e]"><button className="hover:text-white">‹</button><button className="hover:text-white">›</button></div>
+        <div className="flex items-center gap-2 text-[#7a8a9e]"><button className="min-h-[44px] min-w-[44px] hover:text-white">‹</button><button className="min-h-[44px] min-w-[44px] hover:text-white">›</button></div>
       </div>
       <div className="grid grid-cols-7 gap-1 text-center text-[10px] text-[#7a8a9e]">
         {days.map((d) => <div key={d} className="pb-1 font-semibold">{d}</div>)}

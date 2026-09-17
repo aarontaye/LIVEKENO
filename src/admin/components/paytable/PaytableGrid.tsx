@@ -20,20 +20,20 @@ export default function PaytableGrid() {
   }
 
   return (
-    <div className="rounded-xl border border-[rgba(232,169,59,0.12)] bg-[#0a0e17] p-5">
+    <div className="rounded-xl border border-[rgba(232,169,59,0.12)] bg-[#0a0e17] p-4 sm:p-5">
       <h3 className="mb-4 text-sm font-bold text-white">Payout Multipliers (x stake)</h3>
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-sm">
           <thead>
             <tr>
-              <th className="sticky left-0 bg-[#0a0e17] p-2 text-left text-[10px] uppercase tracking-wider text-[#7a8a9e]">Picks \ Hits</th>
+              <th className="sticky left-0 z-10 bg-[#0a0e17] p-2 text-left text-[10px] uppercase tracking-wider text-[#7a8a9e]">Picks \ Hits</th>
               {pickCounts.map((h) => <th key={h} className="p-2 text-center text-[10px] uppercase tracking-wider text-[#7a8a9e]">{h}</th>)}
             </tr>
           </thead>
           <tbody>
             {pickCounts.map((pick) => (
               <tr key={pick} className="border-t border-white/5">
-                <td className="sticky left-0 bg-[#0a0e17] p-2 font-bold text-white">{pick}</td>
+                <td className="sticky left-0 z-10 bg-[#0a0e17] p-2 font-bold text-white">{pick}</td>
                 {pickCounts.map((match) => {
                   const val = grid[pick]?.[match];
                   const isEditing = editing?.pick === pick && editing?.match === match;
@@ -43,7 +43,7 @@ export default function PaytableGrid() {
                         isEditing ? (
                           <input autoFocus value={val} onChange={(e) => setVal(pick, match, e.target.value)} onBlur={() => setEditing(null)} className="w-16 rounded border border-[rgba(232,169,59,0.3)] bg-[#05070d] px-2 py-1 text-center text-xs text-white outline-none" />
                         ) : (
-                          <button onClick={() => setEditing({ pick, match })} className="rounded px-2 py-1 tabular-nums text-[#e8a93b] hover:bg-white/5">{val}x</button>
+                          <button onClick={() => setEditing({ pick, match })} className="min-h-[44px] rounded px-2 py-1 tabular-nums text-[#e8a93b] hover:bg-white/5">{val}x</button>
                         )
                       ) : <span className="text-[#3a4452]">—</span>}
                     </td>
@@ -54,6 +54,7 @@ export default function PaytableGrid() {
           </tbody>
         </table>
       </div>
+      <p className="mt-2 text-[10px] text-[#4a5868] md:hidden">Scroll horizontally to view all columns →</p>
     </div>
   );
 }

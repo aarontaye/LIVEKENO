@@ -2,7 +2,7 @@ import { scheduledDraws } from '@/admin/lib/adminMockData';
 
 export default function UpcomingDrawsList() {
   return (
-    <div className="rounded-xl border border-[rgba(232,169,59,0.12)] bg-[#0a0e17] p-5">
+    <div className="rounded-xl border border-[rgba(232,169,59,0.12)] bg-[#0a0e17] p-4 sm:p-5">
       <h3 className="mb-4 text-sm font-bold text-white">Upcoming Draws</h3>
       <div className="space-y-2">
         {scheduledDraws.map((d) => (

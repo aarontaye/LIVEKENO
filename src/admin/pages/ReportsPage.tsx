@@ -7,12 +7,12 @@ import GamePerformanceTable from '@/admin/components/reports/GamePerformanceTabl
 export default function ReportsPage() {
   return (
     <AdminShell>
-      <div className="mb-6 flex items-center justify-between">
-        <div><h1 className="text-2xl font-black text-white">Reports</h1><p className="text-sm text-[#7a8a9e]">Revenue, payouts, and game performance</p></div>
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div><h1 className="text-xl font-black text-white sm:text-2xl">Reports</h1><p className="text-sm text-[#7a8a9e]">Revenue, payouts, and game performance</p></div>
         <DateRangePicker />
       </div>
       <div className="mb-6"><ReportSummaryCards /></div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <ReportDownloadList />
         <GamePerformanceTable />
       </div>

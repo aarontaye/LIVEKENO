@@ -12,9 +12,10 @@ const statusStyle: Record<Status, string> = {
 
 export default function VersionList() {
   return (
-    <div className="rounded-xl border border-[rgba(232,169,59,0.12)] bg-[#0a0e17] p-5">
+    <div className="rounded-xl border border-[rgba(232,169,59,0.12)] bg-[#0a0e17] p-4 sm:p-5">
       <h3 className="mb-4 text-sm font-bold text-white">Paytable Versions</h3>
-      <table className="w-full text-sm">
+      {/* Desktop table */}
+      <table className="hidden w-full text-sm md:table">
         <thead>
           <tr className="border-b border-white/5 text-left text-[10px] uppercase tracking-wider text-[#7a8a9e]">
             <th className="pb-2 font-semibold">Version</th>
@@ -33,11 +34,28 @@ export default function VersionList() {
               <td className="py-3 text-[#dce5f0]">{v.effectiveFrom}</td>
               <td className="py-3 text-[#dce5f0]">{v.createdBy}</td>
               <td className="py-3 text-[#7a8a9e]">{v.updated}</td>
-              <td className="py-3"><button className="text-xs font-semibold text-[#5fb8ff] hover:underline">View</button></td>
+              <td className="py-3"><button className="min-h-[44px] text-xs font-semibold text-[#5fb8ff] hover:underline">View</button></td>
             </tr>
           ))}
         </tbody>
       </table>
+      {/* Mobile stacked cards */}
+      <div className="space-y-3 md:hidden">
+        {versions.map((v) => (
+          <div key={v.version} className="rounded-lg border border-white/5 bg-[#05070d] p-3">
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-xs text-white">{v.version}</span>
+              <span className={`inline-block rounded-full border px-2 py-0.5 text-[10px] font-bold ${statusStyle[v.status]}`}>{v.status}</span>
+            </div>
+            <div className="mt-2 space-y-1 text-xs">
+              <div><span className="text-[#7a8a9e]">Effective: </span><span className="text-[#dce5f0]">{v.effectiveFrom}</span></div>
+              <div><span className="text-[#7a8a9e]">Created by: </span><span className="text-[#dce5f0]">{v.createdBy}</span></div>
+              <div><span className="text-[#7a8a9e]">Updated: </span><span className="text-[#7a8a9e]">{v.updated}</span></div>
+            </div>
+            <button className="mt-2 min-h-[44px] text-xs font-semibold text-[#5fb8ff] hover:underline">View</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
