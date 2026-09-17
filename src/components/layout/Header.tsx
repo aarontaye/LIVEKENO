@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronRight, History, Menu, X } from 'lucide-react';
+import { ChevronRight, History, Menu, Trophy, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useBoardSelection } from '@/state/useBoardSelection';
 import { useBalance } from '@/hooks/useBalance';
@@ -79,7 +79,7 @@ export default function Header({ isDrawing = false, revealedCount = 0 }: HeaderP
             onClick={() => setIsMenuOpen(false)}
             aria-label="Close navigation menu"
           />
-          <aside className="fixed inset-y-0 left-0 z-50 w-72 border-r-2 border-[#f5b942] bg-gradient-to-b from-[#3a0d03] to-[#120301] p-5 shadow-[8px_0_30px_rgba(0,0,0,0.45)]" aria-label="Main navigation">
+          <aside className="fixed inset-y-0 left-0 z-50 w-72 border-r-2 border-[#f5b942] bg-[#05070d]/50 p-5 shadow-[8px_0_30px_rgba(0,0,0,0.45)]" aria-label="Main navigation" style={{ backdropFilter: 'blur(4px)' }}>
             <div className="mb-8 flex items-center justify-between">
               <p className="text-sm font-black uppercase tracking-[0.2em] text-[#ffe36b]">LIVEKENO</p>
               <button type="button" onClick={() => setIsMenuOpen(false)} className="flex h-10 w-10 items-center justify-center rounded-xl text-white/70 hover:bg-white/10 hover:text-white" aria-label="Close navigation menu">
@@ -89,6 +89,10 @@ export default function Header({ isDrawing = false, revealedCount = 0 }: HeaderP
             <nav className="space-y-2">
               <Link to="/play" onClick={() => setIsMenuOpen(false)} className="block rounded-xl border border-[rgba(245,185,66,0.35)] px-4 py-3 text-sm font-bold text-white hover:bg-white/10">Play Keno</Link>
               <Link to="/history" onClick={() => setIsMenuOpen(false)} className="block rounded-xl border border-[rgba(245,185,66,0.35)] px-4 py-3 text-sm font-bold text-white hover:bg-white/10">Draw History</Link>
+              <Link to="/max-payout" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-2 rounded-xl border border-[rgba(245,185,66,0.35)] px-4 py-3 text-sm font-bold text-white hover:bg-white/10">
+                <Trophy className="h-4 w-4 text-[#ffe36b]" />
+                Max Payout
+              </Link>
             </nav>
           </aside>
         </>

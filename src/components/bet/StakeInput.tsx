@@ -10,7 +10,7 @@ export default function StakeInput({ disabled = false }: StakeInputProps) {
   function adjust(delta: number) { setStake(Math.max(1, stake + delta)); }
 
   return (
-    <div className={`navy-panel rounded-2xl p-4 transition-opacity ${disabled ? 'pointer-events-none opacity-40' : ''}`}>
+    <div className={`navy-panel-transparent rounded-2xl p-4 transition-opacity ${disabled ? 'pointer-events-none opacity-40' : ''}`}>
       <div className="flex items-center justify-between">
         <label className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#f5b942]">Stake</label>
         <div className="flex items-center gap-3">

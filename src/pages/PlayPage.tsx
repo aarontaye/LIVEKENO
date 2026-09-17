@@ -74,7 +74,7 @@ export default function PlayPage() {
 
       <div className="flex-1 overflow-y-auto hide-scrollbar">
         <div className="space-y-3 px-3 py-3 sm:px-4">
-          <StatsBar pickCount={picks.length} stake={stake} />
+          <StatsBar pickCount={picks.length} />
           <StakeInput disabled={isDrawing} />
         </div>
 

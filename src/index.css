@@ -78,6 +78,12 @@
     box-shadow: 0 0 16px rgba(245, 185, 66, 0.08), inset 0 1px 0 rgba(255, 227, 107, 0.06);
   }
 
+  .navy-panel-transparent {
+    background: transparent;
+    border: 2px solid rgba(245, 185, 66, 0.35);
+    box-shadow: 0 0 16px rgba(245, 185, 66, 0.08), inset 0 1px 0 rgba(255, 227, 107, 0.06);
+  }
+
   .gold-text {
     color: var(--keno-gold-light);
   }
