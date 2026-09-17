@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import appBackground from '@/assets/file_000000005a7c81f4ac9d7d3b881f6b49.png';
 
 interface AppShellProps {
   children: ReactNode;
@@ -11,7 +10,7 @@ export default function AppShell({ children }: AppShellProps) {
       className="flex h-[100dvh] w-full flex-col overflow-hidden"
       style={{
         backgroundColor: '#05070D',
-        backgroundImage: `url(${appBackground})`,
+        backgroundImage: 'url(/file_000000001ffc8210b213a935c5f3af47.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
