@@ -37,10 +37,10 @@
 @layer utilities {
   .gold-sphere {
     background:
-      radial-gradient(circle at 32% 28%, #fbedb0 0%, #f0d680 18%, #d4a84b 48%, #a8842f 78%, #7a5f1f 100%);
+      radial-gradient(circle at 32% 28%, #ffe9a8 0%, #f5b942 40%, #d4841f 72%, #b85c0f 100%);
     box-shadow:
       inset 0 -2px 4px rgba(0, 0, 0, 0.35),
-      inset 0 1px 2px rgba(255, 255, 255, 0.3),
+      inset 0 1px 2px rgba(255, 255, 255, 0.35),
       0 2px 6px rgba(0, 0, 0, 0.3);
   }
 
@@ -55,10 +55,10 @@
 
   .drawn-sphere {
     background:
-      radial-gradient(circle at 32% 28%, #fff0c0 0%, #f0d680 20%, #d4a84b 50%, #b8923a 80%, #8a6a28 100%);
+      radial-gradient(circle at 32% 28%, #fff5d0 0%, #ffd470 20%, #f5b942 50%, #d4841f 80%, #b85c0f 100%);
     box-shadow:
-      0 0 0 2px var(--keno-gold-light),
-      0 0 14px 3px rgba(240, 214, 128, 0.5),
+      0 0 0 2px #ffe36b,
+      0 0 14px 3px rgba(255, 227, 107, 0.55),
       inset 0 -2px 4px rgba(0, 0, 0, 0.3),
       inset 0 1px 2px rgba(255, 255, 255, 0.4);
   }
@@ -73,8 +73,9 @@
   }
 
   .navy-panel {
-    background: linear-gradient(180deg, #0f2240 0%, #0a1628 100%);
-    border: 1px solid rgba(59, 157, 255, 0.12);
+    background: linear-gradient(160deg, #2b0a02 0%, #170501 100%);
+    border: 2px solid rgba(245, 185, 66, 0.35);
+    box-shadow: 0 0 16px rgba(245, 185, 66, 0.08), inset 0 1px 0 rgba(255, 227, 107, 0.06);
   }
 
   .gold-text {

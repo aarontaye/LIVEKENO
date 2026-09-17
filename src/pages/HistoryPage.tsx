@@ -10,9 +10,9 @@ export default function HistoryPage() {
     <AppShell>
       <Header />
       <div className="flex-1 overflow-y-auto hide-scrollbar">
-        <div className="px-4 pt-4 pb-2">
+        <div className="px-3 pt-4 pb-2 sm:px-4">
           <h2 className="text-lg font-black text-white">Draw History</h2>
-          <p className="text-xs text-white/40">Recent Keno draws</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-[#f5b942]">Recent Keno draws</p>
         </div>
         <HistoryList draws={draws ?? []} isLoading={isLoading} />
       </div>

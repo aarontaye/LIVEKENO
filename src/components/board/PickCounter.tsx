@@ -16,8 +16,8 @@ export default function PickCounter({ count }: PickCounterProps) {
             key={i}
             className="h-2 w-2 rounded-full transition-all duration-300"
             style={{
-              background: filled ? '#3b9dff' : 'rgba(255,255,255,0.1)',
-              boxShadow: filled ? '0 0 6px rgba(59,157,255,0.6)' : 'none',
+              background: filled ? '#ffe36b' : 'rgba(255,255,255,0.12)',
+              boxShadow: filled ? '0 0 6px rgba(255,227,107,0.6)' : 'none',
               transform: filled ? 'scale(1.1)' : 'scale(1)',
             }}
           />
@@ -27,7 +27,7 @@ export default function PickCounter({ count }: PickCounterProps) {
         <span className="font-bold tabular-nums text-white">{count}</span>
         <span className="text-white/40"> / {MAX_PICKS} picks</span>
         {remaining > 0 && count > 0 && (
-          <span className="ml-2 text-[#3b9dff]">({remaining} left)</span>
+          <span className="ml-2 text-[#ffe36b]">({remaining} left)</span>
         )}
       </div>
     </div>

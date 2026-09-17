@@ -5,7 +5,7 @@ import Header from '@/components/layout/Header';
 import Board from '@/components/board/Board';
 import BoardFooter from '@/components/board/BoardFooter';
 import StakeInput from '@/components/bet/StakeInput';
-import BetSummary from '@/components/bet/BetSummary';
+import StatsBar from '@/components/bet/StatsBar';
 import DrawAnimation from '@/components/draw/DrawAnimation';
 import DrawResultOverlay from '@/components/draw/DrawResultOverlay';
 import PaytableCard from '@/components/paytable/PaytableCard';
@@ -64,28 +64,34 @@ export default function PlayPage() {
     <AppShell>
       <Header isDrawing={isDrawing} revealedCount={revealedNumbers.length} />
 
+      {isDrawing && (
+        <DrawAnimation
+          revealedNumbers={revealedNumbers}
+          onReveal={handleReveal}
+          onComplete={handleAnimationComplete}
+        />
+      )}
+
       <div className="flex-1 overflow-y-auto hide-scrollbar">
-        <div className="space-y-3 px-4 py-4">
-          <BetSummary
-            data={picks.length > 0 ? { picks, stake, potentialPayout: 0, hitCount: 0 } : null}
-          />
+        <div className="space-y-3 px-3 py-3 sm:px-4">
+          <StatsBar pickCount={picks.length} stake={stake} />
           <StakeInput disabled={isDrawing} />
-          <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold uppercase tracking-wider text-white/40">
-              {isDrawing ? 'Numbers being drawn' : 'Pick your numbers'}
-            </p>
-            <button
-              onClick={() => setShowPaytable(true)}
-              className="flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-medium text-[#3b9dff] active:opacity-70"
-            >
-              <BookOpen className="h-3.5 w-3.5" />
-              Paytable
-            </button>
-          </div>
         </div>
 
-        <div className="px-4 pb-4">
+        <div className="px-3 pb-4 sm:px-4">
           <div className="navy-panel rounded-2xl p-3">
+            <div className="mb-3 flex items-center justify-between px-1">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#f5b942]">
+                {isDrawing ? 'Numbers being drawn' : 'Pick your numbers'}
+              </p>
+              <button
+                onClick={() => setShowPaytable(true)}
+                className="flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-bold text-[#ffe36b] active:opacity-70"
+              >
+                <BookOpen className="h-3.5 w-3.5" />
+                Paytable
+              </button>
+            </div>
             <Board
               picks={picks}
               drawnNumbers={drawnNumbers}
@@ -102,10 +108,6 @@ export default function PlayPage() {
         isPlaying={isDrawing}
         isDrawing={isDrawing}
       />
-
-      {isDrawing && (
-        <DrawAnimation onReveal={handleReveal} onComplete={handleAnimationComplete} />
-      )}
 
       {showResult && result && (
         <DrawResultOverlay result={result} onDismiss={handleDismissResult} />
