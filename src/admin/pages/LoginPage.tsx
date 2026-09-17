@@ -18,7 +18,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#05070d] px-4">
+    <div className="flex min-h-screen items-center justify-center bg-transparent px-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#f0d680] to-[#a8842f]"><span className="text-lg font-black text-[#0a1628]">K</span></div>
