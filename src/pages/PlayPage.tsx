@@ -79,7 +79,7 @@ export default function PlayPage() {
         </div>
 
         <div className="px-3 pb-4 sm:px-4">
-          <div className="navy-panel rounded-2xl p-3">
+          <div className="navy-panel-transparent rounded-2xl p-3" style={{ backgroundColor: 'rgba(5, 7, 13, 0.35)' }}>
             <div className="mb-3 flex items-center justify-between px-1">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#f5b942]">
                 {isDrawing ? 'Numbers being drawn' : 'Pick your numbers'}

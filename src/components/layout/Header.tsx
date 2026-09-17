@@ -21,7 +21,7 @@ export default function Header({ isDrawing = false, revealedCount = 0 }: HeaderP
 
   return (
     <>
-      <header className="navy-panel mx-3 mt-3 shrink-0 rounded-2xl px-3 py-3 sm:mx-4 sm:px-4">
+      <header className="navy-panel-transparent mx-3 mt-3 shrink-0 rounded-2xl px-3 py-3 sm:mx-4 sm:px-4" style={{ backgroundColor: 'rgba(5, 7, 13, 0.35)' }}>
         <div className="flex items-center gap-3">
           <button
             type="button"
